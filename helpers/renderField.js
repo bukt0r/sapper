@@ -2,7 +2,6 @@ const FLAG = '🏴';
 const QUESTION = '❓';
 
 const checkZero = (x,y, fieldArr) => {
-    console.log(x,y)
     if (fieldArr[y][x] === 0) {
         document.querySelector(`.cell[data-x='${x}'][data-y='${y}']`).innerText = fieldArr[y][x]
         return true
@@ -39,7 +38,6 @@ function renderField(size, gameElement, timerId, timer, fieldArr) {
     
     gameElement.appendChild(field)
     field.addEventListener('click', function(event) {
-        console.log(fieldArr);
         if (!timerId) {
             timerId = timer();
         }

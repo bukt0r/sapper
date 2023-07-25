@@ -66,7 +66,7 @@ class Game {
         renderField(this.fieldSize, this.gameElement, this.timerId, this.startTimer, this.field)
     }
     bombPlanting() {
-        this.field = bombPlanting(this.fieldSize, this.field);
+        bombPlanting(this.fieldSize, this.field, this.bombAmount);
     }
 }
 

@@ -5,7 +5,7 @@ const bombSetting = (x) => {
     return x === BOMB ? BOMB : (x + 1 || 1);
 }
 
-function bombPlanting(fieldSize, field, BOMB) {
+function bombPlanting(fieldSize, field, bombAmount) {
     let bombs = bombAmount;
     
     // console.log(field)
