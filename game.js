@@ -14,6 +14,9 @@ class Game {
     fieldSizeElement;
     bombsFieldElement;
 
+    gameOver
+
+
     constructor() {
         this.bombAmount = 10;
         this.fieldSize = 10;
@@ -25,20 +28,34 @@ class Game {
         this.bombAmountElement = document.getElementById('bombAmount');
         this.fieldSizeElement = document.getElementById('sizeField');
         this.bombsFieldElement = document.getElementById('bombsField');
-    }
 
-    startTimer = () => {
-        this.timerId = setInterval(() => {
-            this.time += 1;
-            this.timerElement.innerText = this.time;
-        }, 1000)
-    }
+        this.gameOver = false;
 
-    stopTimer = () => {
-        this.timerId = null;
-        this.time = 0;
-        timerElement.innerText = this.time;
+        
+}
+
+stopGame = () => {
+    this.gameOver = true;
+  }
+
+startTimer = () => {
+    if (this.timerId) {
+      clearInterval(this.timerId);
     }
+    this.timerId = setInterval(() => {
+      this.time += 1;
+      this.timerElement.innerText = this.time;
+    }, 1000);
+  }
+
+  stopTimer = () => {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+      this.time = 0;
+      this.timerElement.innerText = this.time;
+    }
+  }
 
     init() {
         this.fieldSizeElement.value = this.fieldSize;
@@ -63,7 +80,7 @@ class Game {
         }
     }
     renderField() { 
-        renderField(this.fieldSize, this.gameElement, this.timerId, this.startTimer, this.field)
+        renderField(this.fieldSize, this.gameElement, this.timerId, this.startTimer, this.stopTimer, this.field)
     }
     bombPlanting() {
         bombPlanting(this.fieldSize, this.field, this.bombAmount);

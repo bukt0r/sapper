@@ -1,3 +1,5 @@
+
+
 const FLAG = '🏴';
 const QUESTION = '❓';
 
@@ -10,7 +12,12 @@ const checkZero = (x,y, fieldArr) => {
     }
 }
 
-function renderField(size, gameElement, timerId, timer, fieldArr) {
+
+
+  
+function renderField(size, gameElement, timerId, timer, stopTimer, fieldArr) {
+
+    console.log(fieldArr)
     
     const prevFieldElement = document.querySelector('.field')
     if (prevFieldElement) {
@@ -46,7 +53,6 @@ function renderField(size, gameElement, timerId, timer, fieldArr) {
             const x = +event.target.dataset.x;
             const y = +event.target.getAttribute('data-y');
             event.target.innerText = fieldArr[y][x]
-           
 
 
             if (fieldArr[y][x] === 0) {
@@ -104,6 +110,49 @@ function renderField(size, gameElement, timerId, timer, fieldArr) {
                     }
                 }
             }
+
+            if (this.gameOver) return;
+
+        
+
+            function checkVictory(size, fieldArr) {
+                for (let y = 0; y < size; y++) {
+                  for (let x = 0; x < size; x++) {
+                    if (fieldArr[y][x] !== '💣' && !document.querySelector(`.cell[data-x='${x}'][data-y='${y}']`).innerText) {
+                      return false;
+                    }
+                  }
+                }
+                return true;
+              }
+
+            if (checkVictory(size, fieldArr)) {
+                console.log('You Win')
+                stopGame()
+                stopTimer();
+            }
+
+            function checkMine(x, y, fieldArr, stopGame) {
+                if (fieldArr[y][x] === '💣') {
+                    console.log('You lose', fieldArr[y][x]);
+                    stopGame();
+                    stopTimer();
+            
+                    for (let i = 0; i < fieldArr.length; i++) {
+                        for (let j = 0; j < fieldArr[i].length; j++) {
+                            if (fieldArr[i][j] === '💣') {
+                                document.querySelector(`.cell[data-x='${j}'][data-y='${i}']`).innerText = '💣';
+                            }
+                        }
+                    }
+                }
+            }
+
+              checkMine(x, y, fieldArr, stopGame)
+
+        
+
+           
         }
 
     });
@@ -124,6 +173,8 @@ function renderField(size, gameElement, timerId, timer, fieldArr) {
                 event.target.innerText = '';
             };
         };
+
+        if (this.gameOver) return
     })
 
   
